@@ -8,7 +8,7 @@ export default function Resume() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-bold">Resume</h1>
           <a
-            href="/path-to-your-resume.pdf" // Replace with your actual file path or URL
+            href="https://drive.google.com/file/d/1DJkhZ0kBCREaIsMNauiSRNJ60619rTOG/view?usp=sharing" // Replace with your actual file path or URL
             target="_blank"
             rel="noopener noreferrer"
             className="bg-primary hover:bg-primary/90 flex items-center px-4 py-2 rounded-lg text-black"
