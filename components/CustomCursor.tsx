@@ -6,43 +6,64 @@ const CustomCursor = () => {
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   const [trail, setTrail] = useState<{ x: number; y: number }[]>([]);
 
   useEffect(() => {
-    // Add no-cursor class to html and body
-    document.documentElement.classList.add('no-cursor');
-    document.body.classList.add('no-cursor');
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-    const updatePosition = (e: MouseEvent) => {
-      requestAnimationFrame(() => {
-        setPosition({ x: e.clientX, y: e.clientY });
-        setIsVisible(true);
-        
-        setTrail(prev => {
-          const newTrail = [...prev, { x: e.clientX, y: e.clientY }];
-          if (newTrail.length > 5) newTrail.shift();
-          return newTrail;
+    // Initial check
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+
+    // Only add cursor effects if not mobile
+    if (!isMobile) {
+      // Add no-cursor class to html and body
+      document.documentElement.classList.add('no-cursor');
+      document.body.classList.add('no-cursor');
+
+      const updatePosition = (e: MouseEvent) => {
+        requestAnimationFrame(() => {
+          setPosition({ x: e.clientX, y: e.clientY });
+          setIsVisible(true);
+          
+          setTrail(prev => {
+            const newTrail = [...prev, { x: e.clientX, y: e.clientY }];
+            if (newTrail.length > 5) newTrail.shift();
+            return newTrail;
+          });
         });
-      });
-    };
+      };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      setIsHovering(!!target.closest('a, button, [role="button"], input, select, textarea'));
-    };
+      const handleMouseOver = (e: MouseEvent) => {
+        const target = e.target as HTMLElement;
+        setIsHovering(!!target.closest('a, button, [role="button"], input, select, textarea'));
+      };
 
-    window.addEventListener('mousemove', updatePosition);
-    window.addEventListener('mouseover', handleMouseOver);
+      window.addEventListener('mousemove', updatePosition);
+      window.addEventListener('mouseover', handleMouseOver);
+
+      return () => {
+        document.documentElement.classList.remove('no-cursor');
+        document.body.classList.remove('no-cursor');
+        window.removeEventListener('mousemove', updatePosition);
+        window.removeEventListener('mouseover', handleMouseOver);
+        window.removeEventListener('resize', checkMobile);
+      };
+    }
 
     return () => {
-      document.documentElement.classList.remove('no-cursor');
-      document.body.classList.remove('no-cursor');
-      window.removeEventListener('mousemove', updatePosition);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, [isMobile]);
 
-  if (!isVisible) return null;
+  // Don't render anything on mobile
+  if (isMobile || !isVisible) return null;
 
   return (
     <>
