@@ -80,7 +80,7 @@
   animation: twinkle 3s infinite;
 }
 
-/* Add to the end of globals.css */
+/* Custom cursor styles */
 .no-cursor {
   cursor: none !important;
 }
