@@ -1,5 +1,18 @@
-import { Code, Database, Globe, Server, Cpu, Brain, PenToolIcon as Tool } from "lucide-react"
-import { Card } from "@/components/ui/card"
+"use client";
+
+import { 
+  Code, 
+  Database, 
+  Globe, 
+  Server, 
+  Cpu, 
+  Brain,
+  LayoutTemplate,
+  GitBranch,
+  Terminal,
+  Monitor
+} from "lucide-react";
+import AnimatedSkillCard from "@/components/AnimatedSkillCard";
 
 const skills = [
   {
@@ -7,44 +20,80 @@ const skills = [
     description: "Core languages I use for development",
     items: ["C#", "Python", "JavaScript", "Java", "C++"],
     icon: Code,
+    logos: [
+      <Code key="1" className="h-4 w-4" />,
+      <Terminal key="2" className="h-6 w-6 dark:text-white" />,
+      <GitBranch key="3" className="h-8 w-8 dark:text-white" />,
+      <Monitor key="4" className="h-6 w-6" />,
+      <Code key="5" className="h-4 w-4" />
+    ]
   },
   {
     category: "Web Technologies",
     description: "Modern web development stack",
     items: ["React", "Next.js", "Tailwind CSS", "HTML", "CSS"],
     icon: Globe,
+    logos: [
+      <Globe key="1" className="h-4 w-4" />,
+      <LayoutTemplate key="2" className="h-6 w-6 dark:text-white" />,
+      <Server key="3" className="h-8 w-8 dark:text-white" />,
+      <Brain key="4" className="h-6 w-6" />,
+      <Database key="5" className="h-4 w-4" />
+    ]
   },
   {
     category: "Databases & Backend",
     description: "Data storage and server technologies",
     items: ["SQL", "MongoDB", ".NET", "RESTful APIs", "WCF Services"],
     icon: Database,
+    logos: [
+      <Database key="1" className="h-4 w-4" />,
+      <Server key="2" className="h-6 w-6 dark:text-white" />,
+      <Cpu key="3" className="h-8 w-8 dark:text-white" />,
+      <Globe key="4" className="h-6 w-6" />,
+      <Terminal key="5" className="h-4 w-4" />
+    ]
   },
   {
     category: "DevOps & Tools",
     description: "Development and deployment tools",
     items: ["Azure DevOps", "Git", "Docker", "CI/CD", "Postman"],
     icon: Server,
+    logos: [
+      <Server key="1" className="h-4 w-4" />,
+      <GitBranch key="2" className="h-6 w-6 dark:text-white" />,
+      <Database key="3" className="h-8 w-8 dark:text-white" />,
+      <Terminal key="4" className="h-6 w-6" />,
+      <Globe key="5" className="h-4 w-4" />
+    ]
   },
   {
     category: "AI & Machine Learning",
     description: "Artificial Intelligence technologies",
     items: ["TensorFlow", "OpenCV", "NLP", "Neural Networks", "Computer Vision"],
     icon: Brain,
+    logos: [
+      <Brain key="1" className="h-4 w-4" />,
+      <Cpu key="2" className="h-6 w-6 dark:text-white" />,
+      <Code key="3" className="h-8 w-8 dark:text-white" />,
+      <Monitor key="4" className="h-6 w-6" />,
+      <Terminal key="5" className="h-4 w-4" />
+    ]
   },
   {
     category: "IoT & Hardware",
     description: "Hardware and IoT experience",
     items: ["IoT Protocols", "Embedded Systems", "Sensor Integration", "Real-time Systems"],
     icon: Cpu,
-  },
-  {
-    category: "IDE and Tools",
-    description: "Development environments and tools I use",
-    items: ["Visual Studio", "Visual Studio Code", "PyCharm", "Git", "Docker", "Postman"],
-    icon: Tool,
-  },
-]
+    logos: [
+      <Cpu key="1" className="h-4 w-4" />,
+      <Server key="2" className="h-6 w-6 dark:text-white" />,
+      <Globe key="3" className="h-8 w-8 dark:text-white" />,
+      <Database key="4" className="h-6 w-6" />,
+      <Monitor key="5" className="h-4 w-4" />
+    ]
+  }
+];
 
 export default function Skills() {
   return (
@@ -58,28 +107,16 @@ export default function Skills() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {skills.map((skill, index) => (
-          <Card key={index} className="p-6 bg-secondary/50 backdrop-blur-sm border-0">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-2 rounded-full bg-primary/10">
-                <skill.icon className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">{skill.category}</h2>
-                <p className="text-sm text-muted-foreground">{skill.description}</p>
-              </div>
-            </div>
-            <ul className="space-y-2">
-              {skill.items.map((item, itemIndex) => (
-                <li key={itemIndex} className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
+          <AnimatedSkillCard
+            key={index}
+            title={skill.category}
+            description={skill.description}
+            items={skill.items}
+            icon={skill.icon}
+            logoComponents={skill.logos}
+          />
         ))}
       </div>
     </div>
-  )
+  );
 }
-

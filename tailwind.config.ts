@@ -84,7 +84,6 @@ const config: Config = {
             height: '0'
           }
         },
-        // Adding meteor keyframes
         meteor: {
           "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
           "70%": { opacity: "1" },
@@ -93,12 +92,16 @@ const config: Config = {
             opacity: "0",
           },
         },
+        move: {
+          "0%": { transform: "translateX(-200px)" },
+          "100%": { transform: "translateX(200px)" },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        // Adding meteor animation
         "meteor-effect": "meteor 5s linear infinite",
+        "move": "move 5s linear infinite",
       }
     }
   },
