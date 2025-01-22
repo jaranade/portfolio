@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import MeteorCard from "@/components/MeteorCard"
 
 const projects = [
   {
@@ -46,30 +46,29 @@ export default function Projects() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <Card key={index} className="group overflow-hidden bg-secondary/50 backdrop-blur-sm border-0">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
-              <p className="text-muted-foreground mb-4">{project.description}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tags.map((tag, tagIndex) => (
-                  <Badge key={tagIndex} variant="secondary" className="bg-primary/10 text-primary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                View on GitHub
-              </a>
+          <MeteorCard
+            key={index}
+            title={project.title}
+            description={project.description}
+          >
+            <div className="flex flex-wrap gap-2 mb-4">
+              {project.tags.map((tag, tagIndex) => (
+                <Badge key={tagIndex} variant="secondary" className="bg-primary/10 text-primary">
+                  {tag}
+                </Badge>
+              ))}
             </div>
-          </Card>
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              View on GitHub
+            </a>
+          </MeteorCard>
         ))}
       </div>
     </div>
   )
 }
-
