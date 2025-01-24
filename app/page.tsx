@@ -1,15 +1,16 @@
-"use client";
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import CodeBlock from "@/components/ui/code-block"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 interface Developer {
-  name: string;
-  about: string;
-  skills: { category: string; items: string[] }[];
-  passions: string[];
+  name: string
+  about: string
+  skills: { category: string; items: string[] }[]
+  passions: string[]
 }
 
 const Joshua: Developer = {
@@ -18,23 +19,71 @@ const Joshua: Developer = {
   skills: [
     {
       category: "Full-Stack Development",
-      items: ["JavaScript/TypeScript", "Node.js", "React", "Next.js", "MongoDB", "MySQL", ".NET Core", "ASP.NET"]
+      items: ["JavaScript/TypeScript", "Node.js", "React", "Next.js", "MongoDB", "MySQL", ".NET Core", "ASP.NET"],
     },
     {
       category: "Web Development & Design",
-      items: ["Responsive Design", "UI/UX", "CSS/SASS", "Tailwind CSS", "Figma", "Adobe XD"]
+      items: ["Responsive Design", "UI/UX", "CSS/SASS", "Tailwind CSS", "Figma", "Adobe XD"],
     },
     {
       category: "API & Integration",
-      items: ["REST APIs", "GraphQL", "gRPC", "WCF", "YARP", "SOAP", "WebSockets"]
+      items: ["REST APIs", "GraphQL", "gRPC", "WCF", "YARP", "SOAP", "WebSockets"],
     },
     {
       category: "Automation Testing",
-      items: ["Selenium", "Cypress", "Jest", "NUnit", "xUnit", "Postman"]
+      items: ["Selenium", "Cypress", "Jest", "NUnit", "xUnit", "Postman"],
+    },
+  ],
+  passions: ["Clean Code", "System Integration", "UI/UX Design", "Basketball", "Gaming", "Community Projects"],
+}
+
+const developerCode = `interface Developer {
+  name: string
+  about: string
+  skills: { category: string; items: string[] }[]
+  passions: string[]
+}
+
+const Joshua: Developer = {
+  name: "Joshua Ranade",
+  about: \`Hello! I'm Joshua Ranade, I build things that work and break things that don't—
+whether it's writing clean code, automating workflows, or experimenting with AI projects. 
+Efficiency and simplicity are my end goals, always.\`,
+  skills: [
+    {
+      category: "Full-Stack Development",
+      items: [
+        "JavaScript/TypeScript", "Node.js", "React", "Next.js",
+        "MongoDB", "MySQL", ".NET Core", "ASP.NET"
+      ]
+    },
+    {
+      category: "Web Development & Design",
+      items: [
+        "Responsive Design", "UI/UX", "CSS/SASS",
+        "Tailwind CSS", "Figma", "Adobe XD"
+      ]
+    },
+    {
+      category: "API & Integration",
+      items: [
+        "REST APIs", "GraphQL", "gRPC", "WCF",
+        "YARP", "SOAP", "WebSockets"
+      ]
+    },
+    {
+      category: "Automation Testing",
+      items: [
+        "Selenium", "Cypress", "Jest",
+        "NUnit", "xUnit", "Postman"
+      ]
     }
   ],
-  passions: ["Clean Code", "System Integration", "UI/UX Design", "Basketball", "Gaming", "Community Projects"]
-}
+  passions: [
+    "Clean Code", "System Integration", "UI/UX Design",
+    "Basketball", "Gaming", "Community Projects"
+  ]
+}`
 
 export default function Home() {
   const [codeComplete, setCodeComplete] = useState(false)
@@ -73,39 +122,11 @@ export default function Home() {
         <CodeBlock
           language="typescript"
           filename="developer.ts"
-          code={` interface Developer {
-  name: string; 
-  about: string;
-  skills: { category: string; items: string[] }[];
-  passions: string[];
-}
-
-const Joshua: Developer = {
-  name: "Joshua Ranade",
-  about: \`Hello! I'm Joshua Ranade, I build things that work and break things that don't—whether it's writing clean code, automating workflows, or experimenting with AI projects. Efficiency and simplicity are my end goals, always.\`,
-  skills: [
-    {
-      category: "Full-Stack Development",
-      items: ["JavaScript/TypeScript", "Node.js", "React", "Next.js", "MongoDB", "MySQL", ".NET Core", "ASP.NET"]
-    },
-    {
-      category: "Web Development & Design",
-      items: ["Responsive Design", "UI/UX", "CSS/SASS", "Tailwind CSS", "Figma", "Adobe XD"]
-    },
-    {
-      category: "API & Integration",
-      items: ["REST APIs", "GraphQL", "gRPC", "WCF", "YARP", "SOAP", "WebSockets"]
-    },
-    {
-      category: "Automation Testing",
-      items: ["Selenium", "Cypress", "Jest", "NUnit", "xUnit", "Postman"]
-    }
-  ],
-  passions: ["Clean Code", "System Integration", "UI/UX Design", "Basketball", "Gaming", "Community Projects"]
-}`}
+          code={developerCode}
           onComplete={() => setCodeComplete(true)}
         />
       </div>
     </div>
   )
 }
+

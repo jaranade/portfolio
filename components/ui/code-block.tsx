@@ -1,61 +1,61 @@
-"use client";
-import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+"use client"
+
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { IconCheck, IconCopy } from "@tabler/icons-react"
 
 interface CodeBlockProps {
-  language: string;
-  code: string;
-  filename?: string;
-  highlightLines?: number[];
-  onComplete?: () => void;
+  language: string
+  code: string
+  filename?: string
+  highlightLines?: number[]
+  onComplete?: () => void
 }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({
-  language,
-  code,
-  filename,
-  highlightLines = [],
-  onComplete,
-}) => {
-  const [copied, setCopied] = React.useState(false);
-  const [displayedCode, setDisplayedCode] = React.useState("");
-  const [isTyping, setIsTyping] = React.useState(true);
+const CodeBlock: React.FC<CodeBlockProps> = ({ language, code, filename, highlightLines = [], onComplete }) => {
+  const [copied, setCopied] = useState(false)
+  const [displayedCode, setDisplayedCode] = useState("")
+  const [isTyping, setIsTyping] = useState(true)
+  const typewriterRef = useRef<NodeJS.Timeout | null>(null)
+  const hasCompletedTyping = useRef(false)
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    await navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
-  React.useEffect(() => {
-    let isMounted = true;
-    let currentIndex = 0;
+  useEffect(() => {
+    if (hasCompletedTyping.current) {
+      return
+    }
+
+    let currentIndex = 0
 
     const typeNextCharacter = () => {
-      if (!isMounted) return;
-      
       if (currentIndex < code.length) {
-        setDisplayedCode(prev => prev + code[currentIndex]);
-        currentIndex++;
-        setTimeout(typeNextCharacter, 10);
+        setDisplayedCode(code.slice(0, currentIndex + 1))
+        currentIndex++
+        typewriterRef.current = setTimeout(typeNextCharacter, 10)
       } else {
-        setIsTyping(false);
-        onComplete?.();
+        setIsTyping(false)
+        hasCompletedTyping.current = true
+        onComplete?.()
       }
-    };
+    }
 
-    // Reset state when code changes
-    setDisplayedCode("");
-    setIsTyping(true);
-
-    typeNextCharacter();
+    typeNextCharacter()
 
     return () => {
-      isMounted = false;
-    };
-  }, [code, onComplete]);
+      if (typewriterRef.current) {
+        clearTimeout(typewriterRef.current)
+      }
+    }
+  }, []) // Empty dependency array
 
   return (
     <div className="w-full rounded-lg bg-[#1a1b26] overflow-hidden">
@@ -73,14 +73,15 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
           style={atomDark}
           customStyle={{ margin: 0, padding: 0, background: "transparent" }}
           showLineNumbers
+          wrapLines={true}
+          wrapLongLines={true}
         >
-          {isTyping 
-            ? displayedCode + "▋" 
-            : `${displayedCode} // Code complete ✨`}
+          {displayedCode + (isTyping ? "▋" : "")}
         </SyntaxHighlighter>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CodeBlock;
+export default CodeBlock
+
