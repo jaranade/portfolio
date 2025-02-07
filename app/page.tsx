@@ -4,7 +4,17 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import CodeBlock from "@/components/ui/code-block"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { IconCloud } from "@/components/IconCloud"
+import {
+  SiReact, SiTypescript, SiNextdotjs, SiTailwindcss, 
+  SiNodedotjs, SiMongodb, SiMysql, SiDotnet, 
+  SiCypress, SiJest, SiSelenium, SiPostman,
+  SiPython, SiGithub, SiDocker,
+  SiKubernetes,
+  SiGraphql, SiFigma, SiFirebase, SiRedux,
+  
+} from "react-icons/si"
 
 interface Developer {
   name: string
@@ -88,45 +98,78 @@ Efficiency and simplicity are my end goals, always.\`,
 export default function Home() {
   const [codeComplete, setCodeComplete] = useState(false)
 
+  const techIcons = [
+    <SiReact key="react" size={65} style={{ color: '#61DAFB' }} />,
+    <SiTypescript key="ts" size={65} style={{ color: '#3178C6' }} />,
+    <SiNextdotjs key="next" size={65} style={{ color: '#ffffff' }} />,
+    <SiTailwindcss key="tailwind" size={65} style={{ color: '#06B6D4' }} />,
+    <SiNodedotjs key="node" size={65} style={{ color: '#339933' }} />,
+    <SiMongodb key="mongodb" size={65} style={{ color: '#47A248' }} />,
+    <SiMysql key="mysql" size={65} style={{ color: '#4479A1' }} />,
+    <SiDotnet key="dotnet" size={65} style={{ color: '#512BD4' }} />,
+    <SiCypress key="cypress" size={65} style={{ color: '#17202C' }} />,
+    <SiJest key="jest" size={65} style={{ color: '#C21325' }} />,
+    <SiSelenium key="selenium" size={65} style={{ color: '#43B02A' }} />,
+    <SiPostman key="postman" size={65} style={{ color: '#FF6C37' }} />,
+    <SiPython key="python" size={65} style={{ color: '#3776AB' }} />,
+    
+    <SiGithub key="github" size={65} style={{ color: '#ffffff' }} />,
+    <SiDocker key="docker" size={65} style={{ color: '#2496ED' }} />,
+    <SiKubernetes key="k8s" size={65} style={{ color: '#326CE5' }} />,
+  
+    <SiGraphql key="graphql" size={65} style={{ color: '#E10098' }} />,
+    <SiFigma key="figma" size={65} style={{ color: '#F24E1E' }} />,
+    <SiFirebase key="firebase" size={65} style={{ color: '#FFCA28' }} />,
+    <SiRedux key="redux" size={65} style={{ color: '#764ABC' }} />,
+  ]
+
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-8">
-          <Image
-            src="/josh.jpeg?height=200&width=200"
-            alt="Joshua Ranade"
-            width={128}
-            height={128}
-            className="rounded-full mx-auto mb-4"
-          />
-          <h1 className="text-3xl font-bold mb-2">Joshua Ranade</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-4">
-            Software Development Engineer specializing in full-stack development, web design, and API integrations.
-            Creating efficient, user-centric solutions with modern technologies.
-          </p>
-          <div className="flex justify-center gap-4 mb-8">
-            <Link
-              href="/projects"
-              className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-            >
-              View Projects <ArrowRight className="ml-2" size={16} />
-            </Link>
-            <Link
-              href="/resume"
-              className="inline-flex items-center px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
-            >
-              Resume
-            </Link>
+    <div className="container mx-auto">
+      <div className="relative max-w-4xl mx-auto">
+        {/* Buttons moved to top right */}
+        <div className="absolute top-0 right-0 p-4 flex gap-4 z-20">
+          <Link
+            href="/projects"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+          >
+            View Projects <ArrowRight className="ml-2" size={16} />
+          </Link>
+          <Link
+            href="/resume"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+          >
+            Resume
+          </Link>
+        </div>
+
+        <div className="relative h-[500px] flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-[500px] h-[520px]">
+              <IconCloud icons={techIcons} />
+            </div>
+          </div>
+          
+          <div className="z-1 text-center">
+            <Image
+              src="/josh.jpeg?height=200&width=200"
+              alt="Joshua Ranade"
+              width={128}
+              height={128}
+              className="rounded-full mx-auto mb-4"
+            />
+            <h1 className="text-3xl font-bold mb-2">Joshua Ranade</h1>
           </div>
         </div>
-        <CodeBlock
-          language="typescript"
-          filename="developer.ts"
-          code={developerCode}
-          onComplete={() => setCodeComplete(true)}
-        />
+
+        <div className="-mt-12">
+          <CodeBlock
+            language="typescript"
+            filename="developer.ts"
+            code={developerCode}
+            onComplete={() => setCodeComplete(true)}
+          />
+        </div>
       </div>
     </div>
   )
 }
-
