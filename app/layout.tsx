@@ -3,7 +3,7 @@ import { GeistSans } from "geist/font/sans"
 import "./globals.css"
 import DockHeader from "@/components/DockHeader"
 import Stars from "@/components/Stars"
-import CustomCursor from "@/components/CustomCursor"
+import SplashCursor from "@/components/SplashCursor"
 
 const geist = GeistSans
 
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning> 
       <head>
         <meta name="description" content={metadata.description} />
         <meta property="og:title" content={metadata.openGraph.title} />
@@ -45,7 +45,12 @@ export default function RootLayout({
       <body className={`${geist.className} antialiased`}>
         <Providers>
           <div className="min-h-screen cosmic-bg relative overflow-hidden">
-            <CustomCursor />
+          <SplashCursor 
+  SIM_RESOLUTION={256}
+  DYE_RESOLUTION={1024}
+  COLOR_UPDATE_SPEED={15}
+  BACK_COLOR={{ r: 0.3, g: 0, b: 0.5 }}
+/>
             <Stars />
             <DockHeader />
             <main>{children}</main>
